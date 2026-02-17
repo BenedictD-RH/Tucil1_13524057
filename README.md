@@ -58,6 +58,8 @@ Tucil1_13524057/
 ├──data/
 |   ├──input/
 |   └──results/
+|       ├──png/
+|       └──txt/
 ├──docs/
 ├──src/
 |   └──main/
@@ -102,7 +104,7 @@ Board dimension can be adjusted according to the input in the bottom left corner
 Inputting through .txt files can be done by creating the file in the `data/input` directory. The .txt files needs to be valid to be inputted. Once created, the file can be inputted by pressing the `data/input` directory. or through typing its name in the text field above it.
 
 3. Saving the result as an image
-After a board is solved and an answer is found, the result can be saved through pressing the `Save Result As` button. The .png file will be stored in the `data/results` directory.
+After a board is solved and an answer is found, the result can be saved through pressing the `Save Result As` button. The .png file will be stored in the `data/results/png` directory.
 
 4. Misc. Features
 - To reset the board to a blank state, press the `Reset Board` button.
