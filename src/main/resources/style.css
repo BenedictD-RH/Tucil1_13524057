@@ -1,0 +1,74 @@
+#root:disabled {
+    opacity: 100%;
+    -fx-opacity: 100%;
+}
+
+
+#arrowbutton {
+    background-color: transparent;
+    -fx-background-color: transparent;
+    opacity: 80%;
+    -fx-opacity: 80%;
+}
+
+#arrowbutton:hover {
+    opacity: 100%;
+    -fx-opacity: 100%;
+}
+
+#arrowbutton:pressed {
+    opacity: 70%;
+    -fx-opacity: 70%;
+}
+
+#arrowbutton:disabled {
+    opacity: 50%;
+    -fx-opacity: 50%;
+}
+
+#leftbutton {
+    -fx-scale-x: -1;
+}
+
+/* #tileColor {
+    border-style: solid;
+    -fx-border-style: solid;
+    border-color: rgba(0,0,0,0.3);
+    -fx-border-color: rgba(0,0,0,0.3);
+    border-width: 10px;
+    -fx-border-width: 10px;
+} */
+
+#tileBorder {
+    border-style: solid;
+    -fx-border-style: solid;
+    border-color: rgba(0,0,0,1);
+    -fx-border-color: rgba(0,0,0,1);
+}
+
+#signButton {
+    border-style: solid;
+    -fx-border-style: solid;
+    border-color: rgba(0,0,0,1);
+    -fx-border-color: rgba(0,0,0,1);
+    border-width: 3px;
+    -fx-border-width: 3px;
+    background-color: rgba(0,0,0,0);
+    -fx-background-color: rgba(0,0,0,0);
+}
+
+#signButton:hover {
+    background-color: rgb(255, 255, 255,0.2);
+    -fx-background-color: rgb(255, 255, 255,0.2);
+}
+
+#signButton:pressed {
+
+    background-color: rgba(0,0,0,0.2);
+    -fx-background-color: rgba(0,0,0,0.2);
+}
+
+#tileLabel {
+    font-size: 150%;
+    -fx-font-size: 150%;
+}
