@@ -3,21 +3,35 @@ package stima.modules;
 import java.io.File;                  
 import java.io.FileNotFoundException; 
 import java.util.Scanner;
+import java.util.Arrays;
 
 public class Board {
-    public Tile[][] boardMatr = new Tile[9][9];
+    public Tile[][] boardMatr = new Tile[26][26];
     public int boardDimension;
-    public Tile[] queenTiles = new Tile[9];
+    public Tile[] queenTiles = new Tile[26];
     public int queenAmount;
+    public String uniqueSigns;
 
     public Board(int dim) {
         this.boardDimension = dim;
         this.queenAmount = 0;
-        for (int i = 0; i < dim; i++) {
-            for (int j = 0; j < dim; j++) {
+        for (int i = 0; i < 26; i++) {
+            for (int j = 0; j < 26; j++) {
                 this.boardMatr[i][j] = new Tile(' ',j,i);
             }
             this.queenTiles[i] = new Tile(' ',-1,-1);
+        }
+        this.uniqueSigns = "";
+    }
+
+    public Board(Board B) {
+        this.boardDimension = B.boardDimension; 
+        this.queenAmount = B.queenAmount;
+        for (int i = 0; i < B.boardDimension; i++) {
+            for (int j = 0; j < B.boardDimension; j++) {
+                this.boardMatr[i][j] = new Tile(B.boardMatr[i][j].sign,j,i);
+            }
+            this.queenTiles[i] = new Tile(B.queenTiles[i].sign, -1,-1);
         }
     }
 
@@ -27,6 +41,7 @@ public class Board {
 
     public void updateTileSign(int x, int y, char newSign) {
         this.boardMatr[y][x] = new Tile(newSign, x, y);
+        this.updateUniqueSigns();
     }
 
     public void placeQueen(int x, int y) {
@@ -75,9 +90,46 @@ public class Board {
         return placeable;
     }
 
-    public static Board readBoard(String inputFile) {
+    public void updateUniqueSigns() {
+        this.uniqueSigns = "";
+        for (int i = 0; i < this.boardDimension; i++) {
+            for (int j = 0; j < this.boardDimension; j++) {
+                if (!this.uniqueSigns.contains(Character.toString(this.tileAt(j,i).sign)) && this.tileAt(j,i).sign != ' ') {
+                    this.uniqueSigns += this.tileAt(j,i).sign;
+                }
+            }
+        }
+        char[] cArray = this.uniqueSigns.toCharArray();
+        Arrays.sort(cArray);
+        this.uniqueSigns = new String(cArray);
+    }
+
+    public int amountOfSignOnBoard(char sign) {
+        int count = 0;
+        for (int i = 0; i < this.boardDimension; i++) {
+            for (int j = 0; j < this.boardDimension; j++) {
+                if (this.tileAt(j, i).sign == sign) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    public boolean isSignOnBoard(char sign) {
+        return amountOfSignOnBoard(sign) > 0;
+    }
+    
+    public boolean isBoardEmpty() {
+        return this.uniqueSigns == "";
+    }
+
+    public boolean isBoardValid() {
+        return (this.uniqueSigns.length() == this.boardDimension) && !this.isSignOnBoard(' ');
+    }
+
+    public static Board readBoard(File myObj) {
         Board B = new Board(9);
-        File myObj = new File("test.txt");
         try (Scanner myReader = new Scanner(myObj)) {
             int dim = -1;
             int n = 0;
@@ -108,13 +160,8 @@ public class Board {
                 }
                 n++;
             }
-            if (uniqueSigns.length() != dim) {
-                System.out.println("Not enough tile signs.");
-                B = new Board(9);
-            }
         } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
+
         }
 
         return B;
