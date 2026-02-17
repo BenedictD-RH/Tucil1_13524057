@@ -314,6 +314,13 @@ public class BoardController {
                     else if (S.processState == "Answer Found") {
                         processStateLabel.setStyle("-fx-text-fill: limegreen");
                         saveButton.setDisable(false);
+                        int n = 1;
+                        File f = new File("data/results/txt/result_" + n);
+                        while(f.exists()) {
+                            n++;
+                            f = new File("data/results/txt/result_" + n);
+                        }
+                        S.writeResult("data/results/txt/result_" + n);
                         reenableInputs();
                     }
                     else if (S.processState == "Answer not Found"){
@@ -428,7 +435,7 @@ public class BoardController {
     public void saveResultAs(ActionEvent event) {
         FileChooser f = new FileChooser();
         f.getExtensionFilters().add(new FileChooser.ExtensionFilter("png files (*.png)", "*.png"));
-        f.setInitialDirectory(new File("data/results"));
+        f.setInitialDirectory(new File("data/results/png"));
         File file = f.showSaveDialog(getStage(event));
 
         if (file != null) {

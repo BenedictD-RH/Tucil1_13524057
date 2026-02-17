@@ -1,5 +1,9 @@
 package stima.modules;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class Solver {
     public int selX, selY;
     public Board currBoard;
@@ -66,5 +70,28 @@ public class Solver {
         //     }
         //     System.out.println("Backtracked to Queen " + (this.currBoard.queenAmount + 1) + " at (" + prevQueenTile.x + ", " + prevQueenTile.y + ", " + prevQueenTile.sign + ")");
         // }
+    }
+
+    public void writeResult(String fileName) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+            for (int i = 0; i < this.currBoard.boardDimension; i++) {
+                for (int j = 0; j < this.currBoard.boardDimension; j++) {
+                    if (this.currBoard.isQueenAt(j,i)) {
+                        writer.write("#");
+                    }
+                    else {
+                        writer.write(Character.toString(this.currBoard.tileAt(j,i).sign));
+                    }
+                }
+                writer.newLine();
+            }
+            writer.newLine();
+            writer.write("Iterations : " + this.iterations);
+            writer.newLine();
+            writer.write("Time Elapsed : " + this.timeElapsed);
+        } catch (IOException e) {
+            System.err.println("Error writing to file: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }
