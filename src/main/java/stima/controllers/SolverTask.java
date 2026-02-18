@@ -16,14 +16,15 @@ public class SolverTask extends Task<Integer>{
     protected Integer call() throws Exception {
         long start = System.currentTimeMillis();
        solver.processState = "Processing...";
-        while(!solver.noPossibilityLeft()) {
-            while(!solver.noTilesLeft()) {
+        while(!solver.noPossibilityLeft() && !solver.allQueensPlaced()) {
+            while(!solver.noTilesLeft() && !solver.allQueensPlaced()) {
                 if (solver.isQueenPlaceableAtSelected()) {
                     solver.placeQueenAtSelected();
                     solver.setSelectedTile(0, 0);
-                    if (solver.allQueensPlaced()) break;
                 }
-                solver.moveSelectedTile();
+                else {
+                    solver.moveSelectedTile();
+                }
             }
             if (solver.allQueensPlaced()) break;
             solver.backtrackToLastQueen();
