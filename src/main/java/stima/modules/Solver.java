@@ -2,6 +2,7 @@ package stima.modules;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.io.File;
 import java.io.IOException;
 
 public class Solver {
@@ -72,7 +73,7 @@ public class Solver {
         // }
     }
 
-    public void writeResult(String fileName) {
+    public void writeResult(File fileName) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
             for (int i = 0; i < this.currBoard.boardDimension; i++) {
                 for (int j = 0; j < this.currBoard.boardDimension; j++) {

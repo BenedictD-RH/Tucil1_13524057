@@ -9,7 +9,6 @@ import java.io.IOException;
 
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.stage.Stage;
 import javafx.stage.FileChooser;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -315,12 +314,13 @@ public class BoardController {
                         processStateLabel.setStyle("-fx-text-fill: limegreen");
                         saveButton.setDisable(false);
                         int n = 1;
-                        File f = new File("data/results/txt/result_" + n);
+                        File dataDir = new File(new File(System.getProperty("user.dir")).getParentFile(), "data/results/txt");
+                        File f = new File(dataDir, "result_" + n);
                         while(f.exists()) {
                             n++;
-                            f = new File("data/results/txt/result_" + n);
+                            f = new File(dataDir, "result_" + n);
                         }
-                        S.writeResult("data/results/txt/result_" + n);
+                        S.writeResult(f);
                         reenableInputs();
                     }
                     else if (S.processState == "Answer not Found"){
@@ -380,23 +380,20 @@ public class BoardController {
         }
     }
 
-    private Stage getStage(ActionEvent event) {
-        return (Stage) ((Node) event.getSource()).getScene().getWindow();
-    }
-
     public void setInputFile(ActionEvent event) {
-        String directory = "data/input/" + filenameTextField.getText();
-        File f = new File(directory);
+        File dataDir = new File(new File(System.getProperty("user.dir")).getParentFile(), "data/input");
+        File f = new File(dataDir, filenameTextField.getText());
         if (f.exists()) {
-            setBoardFromFile(new File(directory), event);
+            setBoardFromFile(f, event);
         }
     
     }
 
     public void openFileDialog(ActionEvent event) {
         FileChooser f = new FileChooser();
-        f.setInitialDirectory(new File("data/input"));
-        File selectedFile = f.showOpenDialog(getStage(event));
+        File dataDir = new File(new File(System.getProperty("user.dir")).getParentFile(), "data/input");
+        f.setInitialDirectory(dataDir);
+        File selectedFile = f.showOpenDialog(null);
         if (selectedFile != null) {
             setBoardFromFile(selectedFile, event);
             filenameTextField.setText(selectedFile.getName());
@@ -435,8 +432,9 @@ public class BoardController {
     public void saveResultAs(ActionEvent event) {
         FileChooser f = new FileChooser();
         f.getExtensionFilters().add(new FileChooser.ExtensionFilter("png files (*.png)", "*.png"));
-        f.setInitialDirectory(new File("data/results/png"));
-        File file = f.showSaveDialog(getStage(event));
+        File dataDir = new File(new File(System.getProperty("user.dir")).getParentFile(), "data/results/png");
+        f.setInitialDirectory(dataDir);
+        File file = f.showSaveDialog(null);
 
         if (file != null) {
             try {
