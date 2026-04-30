@@ -91,9 +91,11 @@ Tucil1_13524057/
 mvn clean compile
 ```
 
-2. Running the program
+2. Running the program (Windows)
 ```bash
-mvn clean javafx:run
+mvn package
+cd target
+javaw -jar queens-solver-1.0-SNAPSHOT-shaded.jar
 ```
 
 ## Using the Application
